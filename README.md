@@ -13,7 +13,7 @@
 |Home|https://jotai.org/|https://github.com/js-in-korean/jotai/blob/master/home.md|
 |Introduction|https://jotai.org/docs/introduction|https://github.com/js-in-korean/jotai/blob/master/introduction.md|
 |Basic - Concepts|https://jotai.org/docs/basics/concepts|https://github.com/js-in-korean/jotai/blob/master/concepts.md|
-|Basic - Primitives|https://jotai.org/docs/basics/primitives||
+|Basic - Primitives|https://jotai.org/docs/basics/primitives|https://github.com/js-in-korean/jotai/blob/master/primitives.md|
 |Basic - Async| https://jotai.org/docs/basics/async||
 |Basic - Comparison|https://jotai.org/docs/basics/comparison||
 |Basic - Showcase|https://jotai.org/docs/basics/showcase||
