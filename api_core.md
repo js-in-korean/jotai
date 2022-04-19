@@ -131,10 +131,7 @@ const createInitialValues = () => {
 
 ### `scope` prop
 
-A Provider accepts an optional prop `scope` that you can use for a scoped Provider.
-When using atoms with a scope, the provider with the same scope is used.
-The recommendation for the scope value is a unique symbol.
-The primary use case of scope is for library usage.
+Provider는 scope가 있는 Provider를 사용할 수 있는 `scope`라는 선택 속성을 받는다. Scope 내에서 atom을 사용할 때 같은 scope에 있는 provider가 사용된다. Scope 값에 대한 권장 사항은 고유 symbol이다. Scope의 주요 사용 사례는 라이브러리 사용이다.
 
 #### Example
 
