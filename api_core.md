@@ -98,9 +98,7 @@ const Root = () => (
 
 ### `initialValues` prop
 
-A Provider accepts an optional prop `initialValues`, with which you can specify
-some initial atom values.
-The use cases of this are testing and server side rendering.
+Provider는 선택 속성으로 `initialValues`를 받는다. 이는 초기 atom 값을 지정할 수 있다. 이것의 사용 사례는 테스팅과 서버 사이드 렌더링이 있다.
 
 #### Example
 
@@ -118,8 +116,7 @@ const TestRoot = () => (
 
 #### TypeScript
 
-The `initialValues` prop is not type friendly.
-We can mitigate it by using a helper function.
+`initialValues` prop은 타입 친화적이 아니다. 헬퍼 함수를 사용하는 것으로 완화할 수 있다.
 
 ```ts
 const createInitialValues = () => {
