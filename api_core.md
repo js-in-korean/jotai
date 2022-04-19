@@ -2,7 +2,7 @@
 
 ## atom
 
-atom config를 생성하기 위해서는 `atom`를 사용하라. atom config는 불변 객체다. atom config는 atom 값을 가지지 있지 않는다. atom 값은 Provider 상태에 저장된다.
+atom config를 생성하기 위해서는 `atom`를 사용하라. atom config는 불변 객체다. atom config는 atom 값을 들고 있지 않는다. atom 값은 Provider 상태에 저장된다.
 
 ```tsx
 // 기본 atom
@@ -86,7 +86,7 @@ const Provider: React.FC<{
 }>
 ```
 
-Atom configs don't hold values. Atom values reside in separate stores. A Provider is a component that contains a store and provides atom values under the component tree. A Provider works like React context provider. If you don't use a Provider, it works as provider-less mode with a default store. A Provider will be necessary if we need to hold different atom values for different component trees. Provider also has some capabilities described below, which doesn't exist in the provider-less mode.
+Atom config는 값을 들고 있지 않는다. Atom 값은 저장소에 분리되어 존재한다. Provider는 저장소를 가지고 컴포넌트 트리 아래에 atom 값을 제공하는 컴포넌트이다. Provider는 React context provider처럼 동작한다. 만약 Provider를 사용하지 않는다면, 기본값을 가지고 provider-less 모드로 동작한다. Provider는 다른 컴포넌트 트리마다 다른 atom 값을 들고 있어야 할 때 필요하게 된다. Provder는 또한 아래에서 설명하는 능력도 가지고 있는데, provider-less 모드에서는 존재하지 않는다.
 
 ```jsx
 const Root = () => (
