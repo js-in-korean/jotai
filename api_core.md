@@ -45,20 +45,20 @@ const derivedAtomWithWriteOnly = atom(null, write)
 
 ### onMount
 
-The created atom config can have an optional property `onMount`. `onMount` is a function which takes a function `setAtom` and returns `onUnmount` function optionally.
+생성된 atom config는 `onMount`라는 선택 속성을 가질 수 있다. `onMount`는 `setAtom` 함수를 가져와서 선택적으로 `onUnmount` 함수를 반환하는 함수다.
 
-The `onMount` function is called when the atom is first used in a provider, and `onUnmount` is called when it’s no longer used. In some edge cases, an atom can be unmounted and then mounted immediately.
+`onMount` 함수는 atom이 provider에서 처음 사용될 때 호출된다. 그리고 `onUnmount`는 더 이상 사용되지 않을 때 호출된다. 일부 엣지 케이스에서 atom은 unmount된 다음 즉시 mount될 수 있다.
 
 ```tsx
 const anAtom = atom(1)
 anAtom.onMount = (setAtom) => {
   console.log('atom is mounted in provider')
-  setAtom(c => c + 1) // increment count on mount
-  return () => { ... } // return optional onUnmount function
+  setAtom(c => c + 1) // mount시에 count 증가
+  return () => { ... } // 선택적으로 onUnmount 함수를 반환
 }
 ```
 
-Calling `setAtom` function will invoke the atom’s `write`. Customizing `write` allows changing the behavior.
+`setAtom` 함수를 호출하는 것은 atom의 `write`를 작동시킬 것이다. `write`를 원하는 대로 만들면 동작을 변경할 수 있다.
 
 ```tsx
 const countAtom = atom(1)
