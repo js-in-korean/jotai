@@ -153,23 +153,23 @@ const LibraryRoot = ({ children }) => (
 ## useAtom
 
 ```ts
-// primitive or writable derived atom
+// 기본 또는 쓰기 가능한 파생 atom
 function useAtom<Value, Update>(
   atom: WritableAtom<Value, Update>,
   scope?: Scope
 ): [Value, SetAtom<Update>]
 
-// read-only atom
+// 읽기 전용 atom
 function useAtom<Value>(atom: Atom<Value>, scope?: Scope): [Value, never]
 ```
 
-The useAtom hook is to read an atom value stored in the Provider. It returns the atom value and an updating function as a tuple, just like useState. It takes an atom config created with `atom()`. Initially, there is no value stored in the Provider. The first time the atom is used via `useAtom`, it will add an initial value in the Provider. If the atom is a derived atom, the read function is executed to compute an initial value. When an atom is no longer used, meaning all the components using it are unmounted, and the atom config no longer exists, the value is removed from the Provider.
+useAtom hook은 Provider에 저장된 atom 값을 읽기 위한 것이다. Atom 값과 업데이트 함수를 useState처럼 튜플로 반환한다. `atom()`으로 생성된 atom config를 취한다. 처음에는 Provider에 저장된 값이 없다. Atom이 `useAtom`으로 처음 사용되면, Provider에 초기 값이 추가될 것이다. 만약 atom이 파생 atom이라면 read 함수는 초기 값을 계산하기 위해 실행된다. Atom이 더 이상 사용되지 않을 때, 즉 이를 사용하는 모든 컴포넌트가 unmounted 되고 atom config는 더 이상 존재하지 않는 경우, 값은 Provider에서 제거된다.
 
 ```js
 const [value, updateValue] = useAtom(anAtom)
 ```
 
-The `updateValue` takes one argument, which will be passed to the third argument of writeFunction of the atom. The behavior depends on how the writeFunction is implemented.
+`updateValue`는 하나의 인수를 취하며, 이는 atom의 write 함수의 세번째 인수에 전달될 것이다. 동작은 write 함수가 구현되는 방식에 달려 있다.
 
 ---
 
