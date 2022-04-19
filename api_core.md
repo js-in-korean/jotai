@@ -1,3 +1,5 @@
+> 임시: https://github.com/pmndrs/jotai/blob/main/docs/api/core.mdx
+
 ## atom
 
 atom config를 생성하기 위해서는 `atom`를 사용하라. atom config는 불변 객체다. atom config는 atom 값을 가지지 있지 않는다. atom 값은 Provider 상태에 저장된다.
@@ -37,9 +39,9 @@ const derivedAtomWithWriteOnly = atom(null, write)
 
 ### debugLabel
 
-The created atom config can have an optional property `debugLabel`. The debug label is used to display the atom in debugging. See [Debugging guide](../guides/debugging.mdx) for more information.
+생성된 atom config는 `debugLabel`이라는 선택 속성을 가질 수 있다. 디버그 레이블은 디버깅시에 atom을 나타내기 위해 사용된다. 자세한 정보는 [디버깅 가이드](./guides_debugging.md)를 보라.
 
-Note: While, the debug labels don’t have to be unique, it’s generally recommended to make them distinguishable.
+비고: 디버그 레이블이 유일할 필요는 없지만 보통 구별할 수 있도록 만드는 것을 권장한다.
 
 ### onMount
 
