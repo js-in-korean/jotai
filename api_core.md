@@ -41,7 +41,7 @@ const derivedAtomWithWriteOnly = atom(null, write)
 
 생성된 atom config는 `debugLabel`이라는 선택 속성을 가질 수 있다. 디버그 레이블은 디버깅시에 atom을 나타내기 위해 사용된다. 자세한 정보는 [디버깅 가이드](./guides_debugging.md)를 보라.
 
-비고: 디버그 레이블이 유일할 필요는 없지만 보통 구별할 수 있도록 만드는 것을 권장한다.
+메모: 디버그 레이블이 유일할 필요는 없지만 보통 구별할 수 있도록 만드는 것을 권장한다.
 
 ### onMount
 
@@ -86,7 +86,7 @@ const Provider: React.FC<{
 }>
 ```
 
-Atom config는 값을 들고 있지 않는다. Atom 값은 저장소에 분리되어 존재한다. Provider는 저장소를 가지고 컴포넌트 트리 아래에 atom 값을 제공하는 컴포넌트이다. Provider는 React context provider처럼 동작한다. 만약 Provider를 사용하지 않는다면, 기본값을 가지고 provider-less 모드로 동작한다. Provider는 다른 컴포넌트 트리마다 다른 atom 값을 들고 있어야 할 때 필요하게 된다. Provder는 또한 아래에서 설명하는 능력도 가지고 있는데, provider-less 모드에서는 존재하지 않는다.
+atom config는 값을 들고 있지 않는다. atom 값은 저장소에 분리되어 존재한다. Provider는 저장소를 가지고 컴포넌트 트리 아래에 atom 값을 제공하는 컴포넌트이다. Provider는 React context provider처럼 동작한다. 만약 Provider를 사용하지 않는다면, 기본값을 가지고 provider-less 모드로 동작한다. Provider는 다른 컴포넌트 트리마다 다른 atom 값을 들고 있어야 할 때 필요하게 된다. Provder는 또한 아래에서 설명하는 능력도 가지고 있는데, provider-less 모드에서는 존재하지 않는다.
 
 ```jsx
 const Root = () => (
@@ -131,7 +131,7 @@ const createInitialValues = () => {
 
 ### `scope` prop
 
-Provider는 scope가 있는 Provider를 사용할 수 있는 `scope`라는 선택 속성을 받는다. Scope 내에서 atom을 사용할 때 같은 scope에 있는 provider가 사용된다. Scope 값에 대한 권장 사항은 고유 symbol이다. Scope의 주요 사용 사례는 라이브러리 사용이다.
+Provider는 scope가 있는 Provider를 사용할 수 있는 `scope`라는 선택 속성을 받는다. scope 내에서 atom을 사용할 때 같은 scope에 있는 provider가 사용된다. scope 값에 대한 권장 사항은 고유 symbol이다. scope의 주요 사용 사례는 라이브러리 사용이다.
 
 #### Example
 
@@ -163,7 +163,7 @@ function useAtom<Value, Update>(
 function useAtom<Value>(atom: Atom<Value>, scope?: Scope): [Value, never]
 ```
 
-useAtom hook은 Provider에 저장된 atom 값을 읽기 위한 것이다. Atom 값과 업데이트 함수를 useState처럼 튜플로 반환한다. `atom()`으로 생성된 atom config를 취한다. 처음에는 Provider에 저장된 값이 없다. Atom이 `useAtom`으로 처음 사용되면, Provider에 초기 값이 추가될 것이다. 만약 atom이 파생 atom이라면 read 함수는 초기 값을 계산하기 위해 실행된다. Atom이 더 이상 사용되지 않을 때, 즉 이를 사용하는 모든 컴포넌트가 unmounted 되고 atom config는 더 이상 존재하지 않는 경우, 값은 Provider에서 제거된다.
+useAtom hook은 Provider에 저장된 atom 값을 읽기 위한 것이다. atom 값과 업데이트 함수를 useState처럼 튜플로 반환한다. `atom()`으로 생성된 atom config를 취한다. 처음에는 Provider에 저장된 값이 없다. atom이 `useAtom`으로 처음 사용되면, Provider에 초기 값이 추가될 것이다. 만약 atom이 파생 atom이라면 read 함수는 초기 값을 계산하기 위해 실행된다. atom이 더 이상 사용되지 않을 때, 즉 이를 사용하는 모든 컴포넌트가 unmounted 되고 atom config는 더 이상 존재하지 않는 경우, 값은 Provider에서 제거된다.
 
 ```js
 const [value, updateValue] = useAtom(anAtom)
@@ -173,20 +173,18 @@ const [value, updateValue] = useAtom(anAtom)
 
 ---
 
-## Notes
+## 메모
 
-### How atom dependency works
+### atom 의존성이 작동하는 방식
 
 To begin with, let's explain this. In the current implementation, every time we invoke the "read" function, we refresh the dependencies and dependents. For example, If A depends on B, it means that B is a dependency of A, and A is a dependent of B.
+먼저 이것을 설명하자. 현재 구현에서는 매번 "read" 함수를 작동시키고 의존성과 종속성을 갱신한다. 예를 들어 A가 B에 의존한다면, B는 A에 의존성이고 A는 B의 종속성이다.
 
 ```js
 const uppercaseAtom = atom((get) => get(textAtom).toUpperCase())
 ```
 
-The read function is the first parameter of the atom.
-The dependency will initially be empty. On first use, we run the read function and know that `uppercaseAtom` depends on `textAtom`. `textAtom` has a dependency on `uppercaseAtom`. So, add `uppercaseAtom` to the dependents of `textAtom`.
-When we re-run the read function (because its dependency `textAtom` is updated),
-the dependency is created again, which is the same in this case. We then remove stale dependents and replace with the latest one.
+read 함수는 atom의 첫번째 파라메터이다. 의존성은 처음에 비어있을 것이다. 처음 사용할 때, read 함수를 실행하고 `textAtom`의 의존하는 `uppercaseAtom`를 알아본다. `textAtom`은 `uppercaseAtom`에 의존성을 가진다. 따라서 `textAtom`의 종속성에 `uppercaseAtom`를 추가한다. read 함수를 다시 실행하면(`textAtom` 의존성이 업데이트되기 때문에), 의존성이 다시 생성된다. 이 경우에는 동일하다. 그런 다음 오래된 종속성을 제거하고 최신의 것으로 교체한다.
 
 ### Atoms can be created on demand
 
