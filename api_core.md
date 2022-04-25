@@ -1,5 +1,3 @@
-> 임시: https://github.com/pmndrs/jotai/blob/main/docs/api/core.mdx
-
 ## atom
 
 atom config를 생성하기 위해서는 `atom`를 사용하라. atom config는 불변 객체다. atom config는 atom 값을 들고 있지 않는다. atom 값은 Provider 상태에 저장된다.
@@ -186,30 +184,23 @@ const uppercaseAtom = atom((get) => get(textAtom).toUpperCase())
 
 read 함수는 atom의 첫번째 파라메터이다. 의존성은 처음에 비어있을 것이다. 처음 사용할 때, read 함수를 실행하고 `textAtom`의 의존하는 `uppercaseAtom`를 알아본다. `textAtom`은 `uppercaseAtom`에 의존성을 가진다. 따라서 `textAtom`의 종속성에 `uppercaseAtom`를 추가한다. read 함수를 다시 실행하면(`textAtom` 의존성이 업데이트되기 때문에), 의존성이 다시 생성된다. 이 경우에는 동일하다. 그런 다음 오래된 종속성을 제거하고 최신의 것으로 교체한다.
 
-### Atoms can be created on demand
+### Atom은 필요시에 생성될 수 있다
 
-While the basic examples here show defining atoms globally outside components,
-there's no restrictions about where or when we can create an atom.
-As long as we remember that atoms are identified by their object referential identity,
-we can create them anytime.
+여기 기본 예제에서는 컴포넌트 밖에서 전역으로 정의하는 atom을 보여줬는데, atom을 생성하는 장소와 때에 대한 제약은 없다. Atom이 객체 참조 식별에 의해 식별되는 것을 기억하는 한 언제든지 만들 수 있다.
 
-If you create atoms in render functions, you would typically want to use
-a hook like `useRef` or `useMemo` for memoization. If not, the atom would be re-created each time the component renders.
+만약 렌더 함수에서 atom을 생성한다면 보통 메모이제이션을 위해 `useRef`나 `useMemo`같은 hook을 사용할지 모른다. 그렇지 않으면 atom은 컴포넌트가 렌더할 때마다 재생성 될 것이다.
 
-You can create an atom and store it with `useState` or even in another atom.
-See an example in [issue #5](https://github.com/pmndrs/jotai/issues/5).
+atom을 생성하고 `useState`나 심지어 다른 atom 저장할 수 있다. [issue #5](https://github.com/pmndrs/jotai/issues/5)에서 예제를 보라.
 
-You can cache atoms somewhere globally.
-See [this example](https://twitter.com/dai_shi/status/1317653548314718208) or
-[that example](https://github.com/pmndrs/jotai/issues/119#issuecomment-706046321).
+전역으로 어딘가에서 atom을 캐시할 수 있다. [이 예제](https://twitter.com/dai_shi/status/1317653548314718208)나 [다른 예제](https://github.com/pmndrs/jotai/issues/119#issuecomment-706046321)를 보라.
 
-Check [`atomFamily`](../api/utils.mdx#atom-family) in utils for parameterized atoms.
+파라미터화된 atom을 위해서는 utils에서 [`atomFamily`](./api_utils.md#atom-family)를 확인하라.
 
-### Some more notes about atoms
+### atom에 대한 더 많은 내용
 
-- If you create a primitive atom, it will use predefined read/write functions to emulate `useState` behavior.
-- If you create an atom with read/write functions, they can provide any behavior with some restrictions as follows.
-- `read` function will be invoked during React render phase, so the function has to be pure. What is pure in React is described [here](https://gist.github.com/sebmarkbage/75f0838967cd003cd7f9ab938eb1958f).
-- `write` function will be invoked where you called initially and in useEffect for following invocations. So, you shouldn't call `write` in render.
-- When an atom is initially used with `useAtom`, it will invoke `read` function to get the initial value, this is recursive process. If an atom value exists in Provider, it will be used instead of invoking `read` function.
-- Once an atom is used (and stored in Provider), it's value is only updated if its dependencies are updated (including updating directly with useAtom).
+- 만약 기본 atom을 생성한다면 `useState` 동작을 에뮬레이트하기 위해 미리 정의된 read/write 함수를 사용할 것이다.
+- 만약 read/write 함수를 가진 atom을 생성한다면 그것들은 다음과 같은 제약사항을 가진 어떤 동작을 제공할 수 있다.
+- `read` 함수는 React 렌더 단계동안 작동될 것이고, 순수해야만 한다. React로 순수한 것이 무엇인지는 [여기](https://gist.github.com/sebmarkbage/75f0838967cd003cd7f9ab938eb1958f)에서 설명하고 있다.
+- `write` 함수는 처음 호출한 위치와 다음 호출 동안 useEffect에서 작동될 것이다. 그래서 렌더시에 `write`를 호출해서는 안된다.
+- atom이 `useAtom`으로 처음 사용될 때, `read` 함수는 초기값을 얻기 위해 작동될 것이고, 재귀 프로세스다. 만약 Provider에서 atom 값이 존재한다면, `read` 함수를 작동시키는 대신 그 값이 사용될 것이다.
+- 일단 atom이 사용되면(그리고 Provider에 저장된), 그 값은 오직 의존성이 업데이트된 경우(useAtom으로 직접 업데이트하는 것을 포함하여)에만 업데이트된다.
