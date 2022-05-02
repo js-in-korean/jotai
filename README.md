@@ -17,7 +17,7 @@
 |Basic - Async| https://jotai.org/docs/basics/async|https://github.com/js-in-korean/jotai/blob/master/async.md|
 |Basic - Comparison|https://jotai.org/docs/basics/comparison||
 |Basic - Showcase|https://jotai.org/docs/basics/showcase||
-|API - Core|https://jotai.org/docs/api/core||
+|API - Core|https://jotai.org/docs/api/core|https://github.com/js-in-korean/jotai/blob/master/api_core.md|
 |API - Utils|https://jotai.org/docs/api/utils||
 |API - Devtools|https://jotai.org/docs/api/devtools||
 |API - Babel|https://jotai.org/docs/api/babel||
